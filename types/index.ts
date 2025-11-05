@@ -22,7 +22,7 @@ export interface FilterOptions {
   candidateQuery: string;
   platform: string;
   format: string;
-  timeFrame: {
+  timeFrame?: {
     start: Date | null;
     end: Date | null;
   };
