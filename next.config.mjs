@@ -1,8 +1,16 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
+  trailingSlash: true,
   output: 'standalone',
   eslint: {
-    ignoreDuringBuilds: true
+    ignoreDuringBuilds: false
+  },
+  typescript: {
+    ignoreBuildErrors: false,
+  },
+  images: {
+    unoptimized: true
   },
     images: {
         remotePatterns: [
