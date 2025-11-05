@@ -1,0 +1,163 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { PoliticalAd, FilterOptions } from '../../../types';
+import { adAPI } from '@/lib/api';
+import SearchFilters from '../../components/SearchFilters';
+import AdGrid from '../../components/AdGrid';
+import DataTable from '../../components/DataTable';
+import LoadingSpinner from '../../components/LoadingSpinner';
+
+export default function LibraryPage() {
+  const [ads, setAds] = useState<PoliticalAd[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
+  const [filters, setFilters] = useState<FilterOptions>({
+    adType: 'all',
+    searchQuery: '',
+    candidateQuery: '',
+    platform: '',
+    format: '',
+    timeFrame: { start: null, end: null },
+    amountSpentSort: '',
+    impressionsSort: '',
+    minAmount: 0,
+    maxAmount: 1000000
+  });
+
+  useEffect(() => {
+    loadAds();
+  }, [filters]);
+
+  const loadAds = async () => {
+    setLoading(true);
+    try {
+      const response = await adAPI.getAds(filters);
+      setAds(response.ads);
+    } catch (error) {
+      console.error('Error loading ads:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleFilterChange = (newFilters: Partial<FilterOptions>) => {
+    setFilters(prev => ({ ...prev, ...newFilters }));
+  };
+
+  const exportData = () => {
+    const csvContent = [
+      ['ID', 'Advertiser', 'Candidate', 'Platform', 'Format', 'Amount Spent', 'Impressions', 'Start Date', 'End Date'],
+      ...ads.map(ad => [
+        ad.id,
+        ad.advertiser,
+        ad.candidate,
+        ad.platform,
+        ad.format,
+        ad.amount_spent.toString(),
+        ad.impressions.toString(),
+        ad.start_date,
+        ad.end_date
+      ])
+    ].map(row => row.join(',')).join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'political-ads.csv';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <main className="container mx-auto px-4 py-8">
+        {/* Header Section */}
+        <div className="mb-8">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                Political Ad Library
+              </h1>
+              <p className="text-gray-600">
+                Explore and analyze political advertisements across digital platforms
+              </p>
+            </div>
+            <div className="flex items-center space-x-4 mt-4 md:mt-0">
+              <div className="flex bg-white border border-gray-300 rounded-md p-1">
+                <button
+                  onClick={() => setViewMode('grid')}
+                  className={`px-3 py-2 text-sm font-medium rounded-md transition-colors duration-200 ${
+                    viewMode === 'grid'
+                      ? 'bg-blue-100 text-blue-700'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  Grid View
+                </button>
+                <button
+                  onClick={() => setViewMode('table')}
+                  className={`px-3 py-2 text-sm font-medium rounded-md transition-colors duration-200 ${
+                    viewMode === 'table'
+                      ? 'bg-blue-100 text-blue-700'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  Table View
+                </button>
+              </div>
+              <button
+                onClick={exportData}
+                className="px-4 py-2 text-sm font-medium text-green-700 bg-green-50 border border-green-200 rounded-md hover:bg-green-100 transition-colors duration-200"
+              >
+                Export CSV
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Stats Summary */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+          <div className="bg-white rounded-lg shadow-sm border p-4">
+            <div className="text-sm text-gray-500">Total Ads</div>
+            <div className="text-2xl font-bold text-gray-900">{ads.length}</div>
+          </div>
+          <div className="bg-white rounded-lg shadow-sm border p-4">
+            <div className="text-sm text-gray-500">Total Spent</div>
+            <div className="text-2xl font-bold text-green-600">
+              ${ads.reduce((sum, ad) => sum + ad.amount_spent, 0).toLocaleString()}
+            </div>
+          </div>
+          <div className="bg-white rounded-lg shadow-sm border p-4">
+            <div className="text-sm text-gray-500">Total Impressions</div>
+            <div className="text-2xl font-bold text-blue-600">
+              {ads.reduce((sum, ad) => sum + ad.impressions, 0).toLocaleString()}
+            </div>
+          </div>
+          <div className="bg-white rounded-lg shadow-sm border p-4">
+            <div className="text-sm text-gray-500">Active Platforms</div>
+            <div className="text-2xl font-bold text-purple-600">
+              {new Set(ads.map(ad => ad.platform)).size}
+            </div>
+          </div>
+        </div>
+
+        <SearchFilters 
+          filters={filters} 
+          onFilterChange={handleFilterChange} 
+        />
+
+        <div className="mt-8">
+          {loading ? (
+            <LoadingSpinner />
+          ) : viewMode === 'grid' ? (
+            <AdGrid ads={ads} />
+          ) : (
+            <DataTable ads={ads} />
+          )}
+        </div>
+      </main>
+    </div>
+  );
+}
