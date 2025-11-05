@@ -1,6 +1,6 @@
 'use client';
 
-import { AnalyticsData } from '@/types';
+import { AnalyticsData } from '../../types';
 
 interface AnalyticsChartsProps {
   analytics: AnalyticsData;

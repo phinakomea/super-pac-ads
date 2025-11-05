@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { PoliticalAd } from '@/types';
+import { PoliticalAd } from '../../types';
 
 interface DataTableProps {
   ads: PoliticalAd[];
