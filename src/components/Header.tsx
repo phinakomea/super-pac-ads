@@ -10,7 +10,7 @@ export default function Header() {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-8">
             <Link href="/" className="text-xl font-bold text-blue-600 hover:text-blue-700">
-              PAC Tracker
+              &Lambda;SP&Lambda;CT
             </Link>
             <Navlinks />
           </div>
