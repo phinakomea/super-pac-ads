@@ -1,4 +1,4 @@
-import { PoliticalAd } from '@/types';
+import { PoliticalAd } from '../../types';
 import AdCard from './AdCard';
 
 interface AdGridProps {
