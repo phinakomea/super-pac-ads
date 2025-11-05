@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { AnalyticsData, FilterOptions } from '../../../types';
+import { AnalyticsData, } from '../../../types';
 import { adAPI } from '@/lib/api';
 import AnalyticsCharts from '../../components/AnalyticsCharts';
 import PlatformStats from '../../components/PlatformStats';

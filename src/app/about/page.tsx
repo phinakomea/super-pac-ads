@@ -23,7 +23,7 @@ export default function AboutPage() {
             </p>
             <p className="text-gray-700 leading-relaxed">
               In an era where digital advertising plays a crucial role in elections, we believe citizens 
-              have the right to know who is trying to influence their votes and how much they're spending 
+              have the right to know who is trying to influence their votes and how much they are spending 
               to do so.
             </p>
           </div>
@@ -63,7 +63,7 @@ export default function AboutPage() {
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">Twitter Ads Transparency</h3>
                   <p className="text-gray-600 text-sm">
-                    Political campaign ads and issue ads from Twitter's transparency center
+                    Political campaign ads and issue ads from Twitter&apos;s transparency center
                   </p>
                 </div>
               </div>

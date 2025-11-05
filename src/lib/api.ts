@@ -9,11 +9,11 @@ interface ApiConfig {
 
 class AdAPI {
   private async fetchFromRealAPI(endpoint: string): Promise<PoliticalAd[] | null> {
-    const APIs: ApiConfig = {
-      facebook: 'https://graph.facebook.com/v18.0/ads_library',
-      google: 'https://transparencyreport.google.com/transparency/api/v3/politicalads',
-      twitter: 'https://ads-api.twitter.com/version/political/ads'
-    };
+    // const APIs: ApiConfig = {
+    //   facebook: 'https://graph.facebook.com/v18.0/ads_library',
+    //   google: 'https://transparencyreport.google.com/transparency/api/v3/politicalads',
+    //   twitter: 'https://ads-api.twitter.com/version/political/ads'
+    // };
 
     try {
       const response = await fetch(endpoint, {
@@ -232,7 +232,7 @@ class AdAPI {
     };
   }
 
-  async getAnalytics(): Promise<AnalyticsData> {
+  async getAnalytics(p0?: {}): Promise<AnalyticsData> {
     // In a real implementation, this would aggregate data from the API
     return MOCK_ANALYTICS;
   }

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const header = (
     <Header />
-)
+);
 
 export default function RootLayout({
   children,

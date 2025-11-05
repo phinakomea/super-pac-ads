@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Header from '../components/Header';
 import SearchFilters from '../components/SearchFilters';
 import AdGrid from '../components/AdGrid';
 import LoadingSpinner from '../components/LoadingSpinner';
