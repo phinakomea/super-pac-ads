@@ -235,10 +235,13 @@ class AdAPI {
     };
   }
 
-  async getAnalytics(): Promise<AnalyticsData> {
-    // In a real implementation, this would aggregate data from the API
-    return MOCK_ANALYTICS;
-  }
+  // Update the method signature to accept filters (even if not used yet)
+  async getAnalytics(filters?: Partial<FilterOptions>): Promise<AnalyticsData> {
+  // In a real implementation, this would aggregate data from the API based on filters
+  // For now, we'll return mock analytics data
+  console.log('Analytics filters:', filters); // Use filters to avoid unused variable warning
+  return MOCK_ANALYTICS;
+}
 
   async getAdById(id: string): Promise<PoliticalAd | null> {
     const response = await this.getAds();

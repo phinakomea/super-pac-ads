@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { PoliticalAd, FilterOptions } from '../../../types';
-import { adAPI } from '@/lib/api';
+import { adAPI } from '../../lib/api';
 import SearchFilters from '../../components/SearchFilters';
 import AdGrid from '../../components/AdGrid';
 import DataTable from '../../components/DataTable';

@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { AnalyticsData, } from '../../../types';
-import { adAPI } from '@/lib/api';
+import { AnalyticsData, FilterOptions } from '../../../types';
+import { adAPI } from '../../lib/api';
 import AnalyticsCharts from '../../components/AnalyticsCharts';
 import PlatformStats from '../../components/PlatformStats';
 import LoadingSpinner from '../../components/LoadingSpinner';
@@ -19,7 +19,8 @@ export default function AnalyticsPage() {
   const loadAnalytics = async () => {
     setLoading(true);
     try {
-      const data = await adAPI.getAnalytics({});
+      // FIX: Remove the empty object parameter since getAnalytics doesn't accept any
+      const data = await adAPI.getAnalytics();
       setAnalytics(data);
     } catch (error) {
       console.error('Error loading analytics:', error);
