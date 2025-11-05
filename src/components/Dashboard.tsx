@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react'
+import React from 'react';
 import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import SearchFilters from '../components/SearchFilters';
@@ -74,5 +74,5 @@ export default function Dashboard() {
         </div>
       </main>
     </div>
-  )
+  );
 }
